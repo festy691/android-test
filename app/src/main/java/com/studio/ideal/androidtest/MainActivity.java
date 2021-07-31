@@ -123,13 +123,17 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull @org.jetbrains.annotations.NotNull Task<Location> task) {
                 Location location = task.getResult();
                 if (location != null) {
+                    Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+                    List<Address> addresses = null;
                     try {
-                        Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
-                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                        addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                         stopLat = addresses.get(0).getLatitude();
                         stopLong = addresses.get(0).getLongitude();
-                        //CoordinateModel cord = new CoordinateModel(startLat, stopLong,startLat,stopLong);
-                        //corDao.insertAll(cord);
+                        new Thread(new Runnable() { @Override public void run() {
+                            CoordinateModel cord = new CoordinateModel(startLat, stopLong,startLat,stopLong);
+                            corDao.insertAll(cord);
+                            }
+                        }).start();
                         getPath();
                     } catch (IOException e) {
                         e.printStackTrace();
