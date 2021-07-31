@@ -145,10 +145,9 @@ public class MainActivity extends AppCompatActivity {
 
     void getPath(){
         try {
-
-            System.out.println(startLat);
-            System.out.println(String.format("%.7f", startLong));
-            Uri uri = Uri.parse("https://www.google.co.in/maps?saddr="+startLat+","+String.format("%.7f", startLong)+"&daddr="+stopLat+","+stopLong);
+            System.out.println(startLong);
+            System.out.println(stopLong);
+            Uri uri = Uri.parse("https://www.google.co.in/maps?saddr="+startLat+","+(startLong +0.00001)+"&daddr="+stopLat+","+stopLong);
             Intent intent = new Intent(Intent.ACTION_VIEW,uri);
             intent.setPackage("com.google.android.apps.maps");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class CoordinateModel {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int uid;
 
     @ColumnInfo(name = "start_lat")
